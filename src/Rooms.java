@@ -8,8 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Rooms {
    //Stores all of the rooms that will be used by the game.
     private static String[] listOfRooms = {
-        "PitRoom",
-        "LavaRoom"
+        "PitRoom"
     };
 
 

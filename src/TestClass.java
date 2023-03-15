@@ -39,7 +39,7 @@ public class TestClass {
             }
 
             Object object2;
-            try { object2 = Rooms.getRoom("PitRoom"); }
+            try { object2 = Rooms.getRoom("PitLevel"); }
             catch(Exception e) {
                 object2 = null;
             }
@@ -74,7 +74,7 @@ public class TestClass {
     @Test
     public void mapSetupTest() {
         Map map = new Map();
-        introRoom tempVar = new introRoom();
+        introLevel tempVar = new introLevel();
         assertEquals(1, map.getMapSize());
         assertEquals(tempVar.getClass(), map.getMap().get(0).getClass());
     }
@@ -82,7 +82,7 @@ public class TestClass {
     @Test
     public void mapMoveARoomSouth() throws Exception  {
         Map map = new Map();
-        introRoom tempVar = new introRoom();
+        introLevel tempVar = new introLevel();
         int[] setPosition = {0, 1};
 
         map.moveRooms('s');
@@ -99,7 +99,7 @@ public class TestClass {
     @Test
     public void mapMoveARoomNorth() throws Exception {
         Map map = new Map();
-        introRoom tempVar = new introRoom();
+        introLevel tempVar = new introLevel();
         int[] setPosition = {0, -1};
 
         map.moveRooms('w');
@@ -116,7 +116,7 @@ public class TestClass {
     @Test
     public void mapMoveARoomEast() throws Exception {
         Map map = new Map();
-        introRoom tempVar = new introRoom();
+        introLevel tempVar = new introLevel();
         int[] setPosition = {1, 0};
 
         map.moveRooms('d');
@@ -133,7 +133,7 @@ public class TestClass {
     @Test
     public void mapMoveARoomWest() throws Exception {
         Map map = new Map();
-        introRoom tempVar = new introRoom();
+        introLevel tempVar = new introLevel();
         int[] setPosition = {-1, 0};
 
         map.moveRooms('a');
@@ -169,28 +169,28 @@ public class TestClass {
 
     @Test
     public void roomMovePlayerNorth() {
-        PitRoom room = new PitRoom();
+        PitLevel room = new PitLevel();
         room.setPlayerPosition('w');
         assertEquals(0, room.getPlayerPosition()[0]);
         
     }  
     @Test
     public void roomMovePlayerSouth() {
-        PitRoom room = new PitRoom();
+        PitLevel room = new PitLevel();
         room.setPlayerPosition('s');
         assertEquals(room.getSize()[0] - 1, room.getPlayerPosition()[0]);
         
     }  
     @Test
     public void roomMovePlayerEast() {
-        PitRoom room = new PitRoom();
+        PitLevel room = new PitLevel();
         room.setPlayerPosition('d');
         assertEquals(room.getSize()[1] - 1, room.getPlayerPosition()[1]);
         
     }  
     @Test
     public void roomMovePlayerWest() {
-        PitRoom room = new PitRoom();
+        PitLevel room = new PitLevel();
         room.setPlayerPosition('a');
         assertEquals(0, room.getPlayerPosition()[1]);
         
@@ -199,7 +199,7 @@ public class TestClass {
     @Test
     public void roomSetRoomPosition() {
         int[] pos = {5, 3};
-        PitRoom room = new PitRoom();
+        PitLevel room = new PitLevel();
         try {
             room.setRoomPosition(pos);
         } catch (Exception e) {
@@ -213,14 +213,14 @@ public class TestClass {
     @Test(expected = Exception.class)
     public void roomSetRoomPositionInvalidLarger() throws Exception {
         int[] pos = {5, 3, 4};
-        PitRoom room = new PitRoom();
+        PitLevel room = new PitLevel();
         room.setRoomPosition(pos);
         
     }
     @Test(expected = Exception.class)
     public void roomSetRoomPositionInvalidSmaller() throws Exception {
         int[] pos = {5};
-        PitRoom room = new PitRoom();
+        PitLevel room = new PitLevel();
         room.setRoomPosition(pos);
         assertEquals(pos[0], room.getRoomPosition()[0]);
         assertEquals(pos[1], room.getRoomPosition()[0]);
@@ -229,15 +229,14 @@ public class TestClass {
     
 
 
-    // public void 
     public static void main(String args[]) {
-        Map map = new Map();
+        //Map map = new Map();
 
+        Object object1;
         try {
-            map.moveRooms('s');
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            object1 = Rooms.getRoom(0);
+        } catch(Exception e) {
+            object1 = null;
         }
     }
 }
