@@ -18,7 +18,14 @@ public class lavaLevel extends Room {
         // if (super.getSize()[0] == 0 or super.getSize()[1] == 0) {
         //     exception
         // }
+        /**Note by Steven:
+         * super is a reference to Room, meaning getSize() returns an array of two ints, not three
+         * Returns the array [room.length, room[0].length]
+         */
         lavaPosition = super.getSize();
+
+        if(lavaPosition[0] < 2) lavaPosition[0] = 2; //Checks if an index out of bounds error will occur or not.
+        if(lavaPosition[1] < 2) lavaPosition[1] = 2; //Checks if an index out of bounds error will occur or not.
 
         lavaPosition[0] = rand.nextInt(lavaPosition[0] - 1); //Subtract one so that it so it cannot generate a pit on the exit.
         lavaPosition[1] = rand.nextInt(lavaPosition[1] - 1); 
@@ -37,22 +44,26 @@ public class lavaLevel extends Room {
         return lavaPosition;
         //returns where the lava is positioned.
     }
-    public class Main {
-    	public void roomEngine(String[] args) throws Exception {
+	@Override
+    	public void roomEngine(){
     		try {
     			BufferedReader trap = new BufferedReader(new FileReader("lavaroom.txt"));
-                String line; 
-    			while((line = trap.readLine()) != null && scnr.next().equals("/n")) {
+                	String line = trap.readLine(); 
+    			while(line != null && scnr.next().equals("/n")) {
     				System.out.print(line);
+				line = trap.readLine(); 
     			}
+			System.out.print("Tread lightly, dear hero.");
                 //reads out room enter text
          		trap.close();
     			if (getLavaPosition() == getPlayerPosition()) {
                     //if you fall into the lava, 
     				try {
                        		BufferedReader pitBuffer = new BufferedReader(new FileReader("cookedChicken.txt"));
-    			        while((line = pitBuffer.readLine()) != null && scnr.next().equals("/n")) {
+				String line2 = pitBuffer.readLine();
+    			        while(line2 != null && scnr.next().equals("/n")) {
     				        System.out.print(line);
+					line2 = pitBuffer.readLine();
     			        }
                         pitBuffer.close();
                         Exception end = null;
@@ -77,5 +88,4 @@ public class lavaLevel extends Room {
 
     		}
     	}
-    }
 }

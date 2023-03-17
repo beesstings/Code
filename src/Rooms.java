@@ -1,5 +1,4 @@
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
 * File folder for all Room classes. Allows easy retrieval of a certain Room class. 
@@ -7,8 +6,9 @@ import java.lang.reflect.InvocationTargetException;
 */
 public class Rooms {
    //Stores all of the rooms that will be used by the game.
-    private static String[] listOfRooms = {
-        "PitRoom"
+    private static Class<?>[] listOfRooms = new Class[] {
+        PitLevel.class,
+        lavaLevel.class
     };
 
 
@@ -17,16 +17,17 @@ public class Rooms {
      *  Returns a list of strings representing the name of all Room Classes
      * @return String[]
      */
-    public static String[] getRooms() {
+    public static Class<?>[] getRooms() {
         return listOfRooms;
     }
     
     /**
      * Returns the name of the Room Class stored at some index.
+     *
      * @param index
-     * @return String
+     * @return Class<?>
      */
-    public static String getRoomName(int index) {
+    public static Class<?> getRoomClass(int index) {
         for(int i = 0; i < listOfRooms.length; i++) 
             if (i == index)
                 return listOfRooms[i];
@@ -36,32 +37,14 @@ public class Rooms {
     }
 
     /**
-     * Returns the class associated with the string.
-     * @param className
-     * @return Class<?>
-     * @throws Exception
-     */
-    public static Class<?> getClassType(String className) throws Exception {
-        try {
-            Class<?> classType = Class.forName(className);
-            return classType;
-        } catch (Exception E) {
-            E.printStackTrace();
-            throw new Exception("Unable to get the class type");
-        }
-       
-    }
-
-    /**
      * Returns a newly created instance of the class associated with the string.  
-     * @param className
+     * @param classToInitialize
      * @return Object
      * @throws Exception
      */
-    public static Object getRoom(String className) throws Exception {
+    public static Object getRoom(Class<?> classToInitialize) throws Exception {
         try {
-            Class<?> classType = getClassType(className);
-            Constructor<?> classConstructor = classType.getDeclaredConstructor();
+            Constructor<?> classConstructor = classToInitialize.getDeclaredConstructor();
             return classConstructor.newInstance();
             //return classType.getDeclaredConstructor().newInstance();
         } catch(Exception e) {
@@ -80,8 +63,8 @@ public class Rooms {
      */
     public static Object getRoom(int index) throws Exception {
         try {
-            String name = getRoomName(index);
-            return getRoom(name);
+            Class<?> classToInitialize = listOfRooms[index];
+            return getRoom(classToInitialize);
         } catch(Exception e) {
             throw new Exception("Unable to get a new room");
         }
@@ -94,9 +77,9 @@ public class Rooms {
      * @return boolean
      */
     public static boolean isObjectARoom(Object potentialRoom) {
-        String name = potentialRoom.getClass().getSimpleName();
+        
         for (int i = 0; i < Rooms.length(); i++) {
-            if (name.equals(Rooms.getRoomName(i))) {
+            if (potentialRoom.getClass().equals(listOfRooms[i])) {
                 return true;
             }
 

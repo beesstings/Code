@@ -20,6 +20,9 @@ public class PitLevel extends Room {
         // }
         pitPosition = super.getSize();
 
+        if(pitPosition[0] < 2) pitPosition[0] = 2; //Checks if an index out of bounds error will occur or not.
+        if(pitPosition[1] < 2) pitPosition[1] = 2; //Checks if an index out of bounds error will occur or not.
+    
         pitPosition[0] = rand.nextInt(pitPosition[0] - 1); //Subtract one so that it so it cannot generate a pit on the exit.
         pitPosition[1] = rand.nextInt(pitPosition[1] - 1); 
     
@@ -35,23 +38,26 @@ public class PitLevel extends Room {
         return pitPosition;
     }
     
-    public class Main {
-    	public void roomEngine(String[] args) {
+    	public void roomEngine() {
     		try {
     			BufferedReader trap = new BufferedReader(new FileReader("trap.txt"));
-                String line; 
-    			while((line = trap.readLine()) != null && scnr.next().equals("\n")) {
+                String line = trap.readLine(); 
+    			while(line != null && scnr.next().equals("\n")) {
     				System.out.print(line);
+                    line = trap.readLine(); 
     			}
                 //reads out room enter text
                 trap.close();
+                System.out.print("Where do you go?");   
+                      
     			if (getPitPosition() == getPlayerPosition()) {
                     //if you fall into the pit, 
     				try {
     			        BufferedReader pit = new BufferedReader(new FileReader("pit.txt"));
-                        String line1; 
-    			        while((line1 = pit.readLine()) != null && scnr.next().equals("\n")) {
+                        String line1 = pit.readLine(); 
+    			        while(line1 != null && scnr.next().equals("\n")) {         
     				        System.out.print(line1);
+                            line1 = pit.readLine(); 
     			        }
                         pit.close();
     				}
